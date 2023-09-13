@@ -1,5 +1,3 @@
-package org.example;
-
 public class test {
         class MyThread extends Thread {
             private int[] arr = new int[50];
