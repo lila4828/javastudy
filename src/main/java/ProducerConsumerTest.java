@@ -1,7 +1,9 @@
-class Buffer {
-    private int data;
+class SharedObject {
+    private int[] data = new int[10];
     private boolean empty = true;
-    public synchronized int get() {
+    private int i = 0;
+
+    public synchronized int take() {
         while(empty) {
             try {
                 wait();
@@ -10,7 +12,7 @@ class Buffer {
         }
         empty = true;
         notifyAll();
-        return data;
+        return data[i--];
     }
 
     public synchronized void put(int data) {
@@ -21,15 +23,15 @@ class Buffer {
             }
         }
         empty = false;
-        this.data = data;
+        this.data[i++] = data;
         notifyAll();
     }
 }
 
-class Producer implements Runnable {
-    private Buffer buffer;
+class Sender implements Runnable {
+    private SharedObject buffer;
 
-    public  Producer(Buffer buffer) {
+    public  Sender(SharedObject buffer) {
         this.buffer = buffer;
     }
     public void run() {
@@ -43,15 +45,16 @@ class Producer implements Runnable {
         }
     }
 }
-class Consumer implements Runnable {
-    private Buffer buffer;
+class Receiver implements Runnable {
+    private SharedObject buffer;
 
-    public  Consumer(Buffer drop) {
+    public  Receiver(SharedObject drop) {
         this.buffer = drop;
     }
+
     public void run() {
         for(int i=0;i<10;i++) {
-            int data = buffer.get();
+            int data = buffer.take();
             System.out.println("소비자: "+data+"번 케익을 소비하였습니다.");
             try {
                 Thread.sleep((int)(Math.random()*100));
@@ -64,8 +67,8 @@ class Consumer implements Runnable {
 
 public class ProducerConsumerTest {
     public static void main(String[] args) {
-        Buffer buffer = new Buffer();
-        (new Thread(new Producer(buffer))).start();
-        (new Thread(new Consumer(buffer))).start();
+        SharedObject buffer = new SharedObject();
+        (new Thread(new Sender(buffer))).start();
+        (new Thread(new Receiver(buffer))).start();
     }
 }
