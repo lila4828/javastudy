@@ -2,14 +2,24 @@ import javax.swing.*;
 import java.awt.*;
 
 class Ball {
-    private int x = 100;
-    private int y = 100;
-    private int size = 30;
+    private int x = 0;
+    private int y = 0;
+    private int size = 50;
     private int xSpeed = 10;
     private int ySpeed = 10;
+    private int red=0, green=0, blue=0;
+
+    public Ball(int x, int y, int size, int r, int g, int b) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.red = r;
+        this.green = g;
+        this.blue = b;
+    }
 
     public void draw(Graphics g) {
-        g.setColor(Color.RED);
+        g.setColor(new Color(red, green, blue));
         g.fillOval(x, y, size, size);
     }
     public void update() {
@@ -27,13 +37,16 @@ class Ball {
 public class MyPanel extends JPanel {
     static final int BOARD_WIDTH = 600;
     static final int BOARD_HEIGHT = 300;
-    private Ball ball = new Ball();
-
+    private Ball ball1 = new Ball(200, 0, 50, 255, 0,255);
+    private Ball ball2 = new Ball(100, 100, 50, 255, 255,0);
+    private Ball ball3 = new Ball(0, 200, 50, 0, 255,255);
     public MyPanel() {
-        this.setBackground(Color.YELLOW);
+        this.setBackground(Color.BLACK);
         Runnable task = () -> {
             while (true) {
-                ball.update();
+                ball1.update();
+                ball2.update();
+                ball3.update();
                 repaint();
                 try {
                     Thread.sleep(10);
@@ -47,7 +60,9 @@ public class MyPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        ball.draw(g);
+        ball1.draw(g);
+        ball2.draw(g);
+        ball3.draw(g);
     }
 
     public static void main(String[] args) {
