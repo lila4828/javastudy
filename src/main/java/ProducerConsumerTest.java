@@ -29,7 +29,7 @@ class SharedObject {
 }
 
 class Sender implements Runnable {
-    private int[] data = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    private int[] data = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     private SharedObject buffer;
 
     public  Sender(SharedObject buffer) {
@@ -38,7 +38,6 @@ class Sender implements Runnable {
     public void run() {
         for(int i=0;i<10;i++) {
             buffer.put(data[i]);
-            System.out.println("생산자: "+i+"번 케익을 생산하였습니다.");
             try {
                 Thread.sleep((int)(Math.random()*100));
             } catch (InterruptedException e) {
@@ -48,6 +47,7 @@ class Sender implements Runnable {
 }
 class Receiver implements Runnable {
     private SharedObject buffer;
+    private int sum = 0;
 
     public  Receiver(SharedObject drop) {
         this.buffer = drop;
@@ -56,12 +56,14 @@ class Receiver implements Runnable {
     public void run() {
         for(int i=0;i<10;i++) {
             int data = buffer.take();
-            System.out.println("소비자: "+data+"번 케익을 소비하였습니다.");
+            System.out.println("MESSAGE RECEIVED: "+data);
+            sum+=data;
             try {
                 Thread.sleep((int)(Math.random()*100));
             } catch (InterruptedException e) {
             }
         }
+        System.out.println("Sum: "+sum);
     }
 }
 
