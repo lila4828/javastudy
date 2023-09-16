@@ -1,8 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 
-import java.awt.*;
-
 class Ball {
     private int x = 100;
     private int y = 100;
