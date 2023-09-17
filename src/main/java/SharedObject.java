@@ -1,4 +1,4 @@
-class SharedObject {
+public class SharedObject {
     private int data;
     private boolean empty = true;
     private int i = 0;
@@ -65,10 +65,7 @@ class Receiver implements Runnable {
         }
         System.out.println("Sum: "+sum);
     }
-}
 
-
-public class ProducerConsumerTest {
     public static void main(String[] args) {
         SharedObject buffer = new SharedObject();
         (new Thread(new Sender(buffer))).start();
