@@ -1,6 +1,7 @@
 package org.example;
 
 // db 연결
+import java.io.UnsupportedEncodingException;
 import java.sql.*;
 
 public class Main {
@@ -26,16 +27,54 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
         Connection con = makeConnection();
-        Statement s = con.createStatement();
-        String query = "SELECT * FROM student";
-        ResultSet rows = s.executeQuery(query);
+        PreparedStatement myStmt = null;
+        ResultSet myRs = null;
 
-        while (rows.next()) {
-            int id = rows.getInt("id");
-            String name = rows.getString("name");
-            String title = rows.getString("dept");
-            System.out.println(id + " " + name + " " + title);
+        try {
+            myStmt = con.prepareStatement("select * from employees where salary > ? and department=?");
+
+            myStmt.setDouble(1, 80000);
+            myStmt.setString(2, "Computer");
+
+            myRs = myStmt.executeQuery();
+            System.out.println("The prepared statement: salary > 80000, department = Computer\n");
+            display(myRs);
+
+            System.out.println("\n\nReuse the prepared statement but with different parameters:"
+                    + "\n\nsalary > 25000, department = Marine\n");
+
+            myStmt.setDouble(1, 25000);
+            myStmt.setString(2, "Marine");
+
+            myRs = myStmt.executeQuery();
+            display(myRs);
+
+        } catch (Exception exc){
+            exc.printStackTrace();
         }
-            con.close();
+        finally {
+            if (myRs != null){
+                myRs.close();
+            }
+
+            if (myStmt != null){
+                myStmt.close();
+            }
+
+            if (con != null){
+                con.close();
+            }
+        }
+    }
+
+    private static void display(ResultSet myRs) throws SQLException {
+        while (myRs.next()) {
+            String lastName = myRs.getString("last_name");
+            String firstName = myRs.getString("first_name");
+            double salary = myRs.getDouble("salary");
+            String department = myRs.getString("department");
+
+            System.out.printf("%s, %s, %.2f, %s\n", lastName, firstName, salary, department);
+        }
     }
 }
