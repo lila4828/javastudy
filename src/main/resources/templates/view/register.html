@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <title>login register</title>
+        <style> h1 {text-align: center;} </style>
+    </head>
+    <body>
+        <h1>Registration Succeeded</h1>
+        <ul>
+            <li><p th:text="'First name: ' + ${firstName}"></p></li>
+            <li><p th:text="'Last name: ' + ${lastName}"></p></li>
+            <li><p th:text="'Email: ' + ${email}"></p></li>
+        </ul>
+    </body>
+</html>
