@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration and Login System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div style="padding: 50px 5px 5px 5px;">
+    <h1 class="text-center">Registration Succeeded!</h1>
+    <ul>
+        <li><h2><span th:text="'First name: ' + ${user.firstName}"></span></h2></li>
+        <li><h2><span th:text="'Last name: ' + ${user.lastName}"></span></h2></li>
+        <li><h2><span th:text="'Email: ' + ${user.email}"></span></h2></li>
+    </ul>
+</div>
+</body>
+</html>

@@ -1,6 +1,6 @@
 package com.example.user.service.impl;
 
-import com.example.user.entity.UserInfo;
+import com.example.user.entity.User;
 import com.example.user.repositroy.UserRepositroy;
 import com.example.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +14,8 @@ public class UserServiceImpl implements UserService {
     private UserRepositroy userRepositroy;
 
     @Override
-    public UserInfo getUser(Long id) {
-        Optional<UserInfo> user = userRepositroy.findById(id);
+    public User getUser(Long id) {
+        Optional<User> user = userRepositroy.findById(id);
         if(user.isPresent()) {
             return user.get();
         } else {
@@ -24,16 +24,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserInfo saveUser(UserInfo userInfo) {
-        UserInfo saveUser = userRepositroy.save(userInfo);
+    public User saveUser(User user) {
+        User saveUser = userRepositroy.save(user);
         System.out.println(saveUser);
         return saveUser;
     }
 
     @Override
-    public UserInfo changUserEmail(Long id, String new_email) {
-        Optional<UserInfo> user = userRepositroy.findById(id);
-        UserInfo newUser;
+    public User changUserEmail(Long id, String new_email) {
+        Optional<User> user = userRepositroy.findById(id);
+        User newUser;
         if(user.isPresent()) {
             newUser = user.get();
             newUser.setEmail(new_email);
@@ -45,9 +45,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long id) {
-        Optional<UserInfo> selectUser = userRepositroy.findById(id);
+        Optional<User> selectUser = userRepositroy.findById(id);
         if(selectUser.isPresent()) {
-            UserInfo user = selectUser.get();
+            User user = selectUser.get();
             userRepositroy.delete(user);
         } else {
             throw new EntityNotFoundException();
