@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Library Management</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h1 class="mb-4">Add Book</h1>
+    <form th:action="@{/addBook}" method="post">
+        <div class="form-group"  th:object="${book}">
+            <label for="booktitle">title</label>
+            <input type="text" class="form-control" id="booktitle" th:field="*{title}" required>
+            <label for="bookpublisher">publisher</label>
+            <input type="text" class="form-control" id="bookpublisher" th:field="*{publisher}" required>
+            <label for="authorName">authorName</label>
+            <input type="text" class="form-control" id="authorName" th:field="*{authorName}" required>
+        </div>
+        <button type="submit" class="btn btn-success">Add Book</button>
+    </form>
+    <a class="btn btn-secondary mt-3" th:href="@{/book-list}">Cancel</a>
+</div>
+</body>
+</html>

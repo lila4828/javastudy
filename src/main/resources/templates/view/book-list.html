@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Library Management</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <p></p>
+    <h2>Library Management</h2>
+    <p></p>
+    <!-- Display the list of books -->
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Num</th>
+            <th>Title</th>
+            <th>Publisher</th>
+            <th>Author</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Use Thymeleaf to iterate through the books -->
+        <tr th:each="library, i : ${libraryList}">
+            <td th:text="${i.count}"></td>
+            <th><p th:text="*{library.title}"></p></th>
+            <th><p th:text="*{library.publisher}"></p></th>
+            <th><p th:text="*{library.authorName}"></p></th>
+            <th><a class="btn btn-secondary mt-3" th:href="@{'/editBook/' + ${library.getId()}}">Edit</a>
+                <a class="btn btn-secondary mt-3" th:href="@{'/deleteBook/' + ${library.getId()}}">Delete</a>
+            </th>
+        </tr>
+        </tbody>
+    </table>
+    <p></p>
+    <a class="btn btn-success" th:href="@{/addBook}">Add Book</a>
+</div>
+</body>
+</html>
