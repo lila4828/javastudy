@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <title>Spring Security</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div layout:fragment="content">
+<div class="container">
+    <div class="row">
+    <div class="col-md-4 mb-3">
+        <img th:src="@{'/images/로그인.png'}" style="min-width: 900px;" alt="One2one Image" class="img-thumbnail">
+</div>
+<ul>
+    <li><code>[실행 영상]</code> : <a href="http://localhost:8080/videos/로그인실행동영상.mp4"><h>로그인실행영상</h></a></li>
+</ul>
+</div>
+</body>
+</html>

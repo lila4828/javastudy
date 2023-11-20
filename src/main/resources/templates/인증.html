@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <title>Spring Security</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div layout:fragment="content">
+<div class="container mt-5">
+
+    <h2><strong>스프링부트 시큐리티를 이용한 <i>Login</i> 구현하기</strong></h2>
+    <p></p>
+    <h4>0. 스프링부트 시큐리티 구조</h4>
+    <p></p>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <img th:src="@{'/images/스프링부트_시큐리티구조.png'}" style="min-width: 800px;" alt="One2one Image" class="img-thumbnail">
+        </div>
+    </div>
+
+    <h4>1. 스프링부트 시큐리티 dependency 설정</h4>
+    <p></p>
+    //파일위치: ../pom.xml
+    <div th:replace="fragments/sourcecode :: pom-code"></div>
+    스프링부트 시큐리티 프레임워크를 사용하기 위해 위의 dependency를 <code>pom.xml</code>에 설정한다.<br>
+
+
+
+    <p></p>
+    <h4>2. login.html </h4>
+    <p></p>
+    <code>login.html</code>은 다음과 같으며 <code>/templates</code> 폴더에 위치한다.<br>
+    //파일위치: ../templates/login.html
+    <div th:replace="fragments/sourcecode :: login-code"></div>
+
+    <h4>3. SecurityController </h4>
+    <p></p>
+    <code>SecurityController</code>에서 <code>/login</code> 매핑을 처리한다.
+    <pre><h5><code class="language-java">
+            //파일위치: ../controller/SecurityController.java
+            @GetMapping("/login") //templates/login.html 실행
+            public String login() {
+                return "/login";
+            }
+        </code></h5></pre>
+    로그인을 처리하는 @PostMapping 방식의 메서드는 스프링 시큐리티가 담당하므로 구현할 필요 없다.<br>
+
+    <p></p>
+    <h4>4. Member </h4>
+    <p></p>
+    //파일위치: ../domain/Member.java
+    <div th:replace="fragments/sourcecode :: member-code"></div>
+
+    <p></p>
+    <h4>5. Role </h4>
+    <p></p>
+    //파일위치: ../domain/Role.java
+    <div th:replace="fragments/sourcecode :: role-code"></div>
+    <p></p>
+    스프링 시큐리티는 <mark><strong>인증(Authentication)</strong></mark>과 <mark><strong>인가(Authorization)</strong></mark>를 관리한다.<br>
+    사용자Id와 패스워드로 <strong>인증</strong>이 된 후 특정 페이지를 접근하기 위해 <strong>인가(권한)</strong>가 필요하다.<br>
+    <code>Role</code>클래스는 ADMIN, MEMBER, MANAGER  3개의 권한을 제공한다. 권한에 따라 접근할 수 있는 서버 자원(Resource)가 다르다.<br>
+
+    <p></p>
+    <h4>6. MemberRepository </h4>
+    <p></p>
+    //파일위치: ../repository/MemberRepository.java
+    <div th:replace="fragments/sourcecode :: repo-code"></div>
+
+    <p></p>
+    <h4>7. MemberRepositoryTest </h4>
+    <p></p>
+    //파일위치: /test/...package.../MemberRepositoryTest.java
+    <div th:replace="fragments/sourcecode :: MemberRepositoryTest-code"></div>
+
+
+    <p></p>
+    <h4>8. SecurityUser</h4>
+    <p></p>
+    //파일위치: ../config/SecurityUser.java
+    <div th:replace="fragments/sourcecode :: SecurityUser-code"></div>
+    <p></p>
+
+    <p></p>
+    <h4>9. UserSecurityService </h4>
+    <p></p>
+    //파일위치: ../service/UserSecurityService.java
+    <div th:replace="fragments/sourcecode :: UserSecurityService-code"></div>
+    <p></p>
+    UserSecurityService는 스프링 시큐리티가 제공하는 UserDetailsService 인터페이스를 구현(implements) 한다.<br>
+    스프링 시큐리티의 UserDetailsService는 loadUserByUsername 메서드를 구현하도록 강제하는 인터페이스이다<br>
+    <code> public UserDetails loadUserByUsername(String username) </code><br>
+
+
+    <p></p>
+    <h4>10. login URL 등록</h4>
+    <p></p>
+    로그인 페이지의 URL은 <code>/login</code>이고 로그인 성공시에 이동하는 디폴트 페이지는 <code>/loginSuccess</code>이다.<br>
+    <code>login.html</code>과 <code>loginSuccess.html</code>은 <code>SecurityConfig.java</code>에 등록한다.<br>
+    <pre><h5><code class="language-java">
+        //파일위치: ../config/SecurityConfig.java
+        http
+        .formLogin()
+        .loginPage("/login") // 로그인 페이지 login.html
+        .defaultSuccessUrl("/loginSuccess", true)  //로그인 성공시 이동 url loginSuccess.html
+    </code></h5></pre>
+
+    <p></p>
+    <h4>11. SecurityConfig </h4>
+    <p></p>
+    //파일위치: ../config/SecurityConfig.java
+    <div th:replace="fragments/sourcecode :: SecurityConfig-code"></div>
+    <p></p>
+
+
+    <p></p>
+    <p></p>
+    <h4>12. 인텔리제이 모듈 구조</h4>
+    <p></p>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <img th:src="@{'/images/구조.png'}" style="min-width: 400px;" alt="One2one Image" class="img-thumbnail">
+        </div>
+
+    </div>
+
+    <p></p>
+    <p></p>
+    <h4>13. <code>member_login</code> 테이블</h4>
+    <p></p>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <img th:src="@{'/images/member테이블.png'}" style="min-width: 800px;" alt="One2one Image" class="img-thumbnail">
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Conditional Content</title>
+</head>
+<body>
+<h2>Welcome!</h2>
+
+<div sec:authorize="hasAnyAuthority('MEMBER')">
+    <button>mem button</button>
+    <p>This content is visible to users with the 'ROLE_MEMBER' role.</p>
+</div>
+
+<div sec:authorize="hasAnyAuthority('ADMIN')">
+    <button>admin button</button>
+    <p>This content is visible to users with the 'ROLE_ADMIN' role.</p>
+</div>
+</body>
+</html>

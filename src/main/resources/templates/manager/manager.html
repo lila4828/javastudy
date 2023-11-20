@@ -1,0 +1,24 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <title>시큐리티 테스트</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+
+<body>
+<div layout:fragment="content">
+<div class="container my-3">
+    <h3><strong>Manager</strong> 권한을 가진 사용자를 위한 화면입니다.</h3>
+    <p></p>
+    <a th:href="@{/loginSuccess}"><h4>뒤로 가기</h4></a><p></p>
+    <form action="logout" method="get">
+        <input type="submit" value="로그아웃"></input>
+    </form>
+</div>
+</div>
+</body>
+</html>

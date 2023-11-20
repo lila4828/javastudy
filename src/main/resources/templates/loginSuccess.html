@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+
+<head>
+    <title>로그인 성공</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+<div layout:fragment="content">
+<div class="container mt-5 my-5">
+    <h3>로그인 인증 성공</h3><p></p>
+    <h5><a th:href="@{/}">메인 페이지로 이동</a></h5><p></p>
+    <h5><a th:href="@{/member}">Member 페이지로 이동</a></h5><p></p>
+    <div sec:authorize="hasRole('MANAGER')">
+        <h5><a th:href="@{/templates/manager}">Manager 전용 페이지로 이동</a></h5><p></p>
+    </div>
+    <div sec:authorize="hasRole('ADMIN')">
+        <h5><a th:href="@{/templates/admin}">Admin 전용 페이지로 이동</a></h5>
+    </div>
+</div>
+</div>
+</body>
+</html>

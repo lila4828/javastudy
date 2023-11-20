@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <title>Spring Security</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div layout:fragment="content">
+<div class="container mt-5">
+
+    <h2><strong>스프링부트 시큐리티를 이용한 인가</strong></h2>
+    <p></p>
+
+<p></p>
+    <h4><strong>1. 스프링 시큐리티에서 인가: <code>SecurityConfig</code></strong> </h4>
+<p></p>
+//파일위치: ../config/SecurityConfig.java
+<div th:replace="fragments/sourcecode :: SecurityConfig-code"></div>
+<p></p>
+
+<h4><strong>2. 웹 페이지에서 인가: <code>loginSuccess</code></strong> </h4>
+<p></p>
+//파일위치: ../loginSuccess.html
+<div th:replace="fragments/sourcecode :: loginSuccess-code"></div>
+<p></p>
+
+</div>
+</div>
+</body>
+</html>
